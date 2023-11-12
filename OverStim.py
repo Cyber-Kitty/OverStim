@@ -316,6 +316,24 @@ async def run_overstim():
         ZEN_VIBE_FOR_DISCORD_ORB = config["OverStim"].getboolean("ZEN_VIBE_FOR_DISCORD_ORB")
         ZEN_DISCORD_ORB_VIBE_INTENSITY = config["OverStim"].getfloat("ZEN_DISCORD_ORB_VIBE_INTENSITY")
 
+        #----------------Cyberkittys Addtions
+        # Widowmaker-Specific Constants
+        #Widowmaker - Scoped State
+        VIBE_FOR_WIDOW_SCOPED = config["OverStim"].getboolean("VIBE_FOR_WIDOW_SCOPED")
+        WIDOW_SCOPED_INTENSITY = config["OverStim"].getfloat("WIDOW_SCOPED_INTENSITY")
+        WIDOW_SCOPE_DISCONNECT_BUFFER = config["OverStim"].getint("WIDOW_SCOPE_DISCONNECT_BUFFER")
+        
+        #Widowmaker - Ultimate State
+        VIBE_FOR_WIDOW_ULTIMATE = config["OverStim"].getboolean("VIBE_FOR_WIDOW_ULTIMATE")
+        WIDOW_ULTIMATE_INTENSITY = config["OverStim"].getfloat("WIDOW_ULTIMATE_INTENSITY")
+        WIDOW_ULTIMATE_DISCONNECT_BUFFER = config["OverStim"].getint("WIDOW_ULTIMATE_DISCONNECT_BUFFER")
+        
+        #Widowmaker - PoisonMine
+        VIBE_FOR_WIDOW_BOMB = config["OverStim"].getboolean("VIBE_FOR_WIDOW_BOMB")
+        WIDOW_BOMB_INTENSITY = config["OverStim"].getfloat("WIDOW_BOMB_INTENSITY")
+        WIDOW_BOMB_DISCONNECT_BUFFER = config["OverStim"].getint("WIDOW_BOMB_DISCONNECT_BUFFER")
+        #----------------Cyberkittys Addtions
+
         # Other constants
         MAX_REFRESH_RATE = config["OverStim"].getint("MAX_REFRESH_RATE")
         DEAD_REFRESH_RATE = config["OverStim"].getfloat("DEAD_REFRESH_RATE")
@@ -330,8 +348,27 @@ async def run_overstim():
         player = OverwatchStateTracker()
         player.mercy_beam_disconnect_buffer_size = MERCY_BEAM_DISCONNECT_BUFFER
         player.zen_orb_disconnect_buffer_size = ZEN_ORB_DISCONNECT_BUFFER
+
+        #----------------Cyberkittys Addtions
+        #-----------WIDOWMAKER-----------#
+        player.widow_isScoped_disconnect_buffer_size_1 = WIDOW_SCOPE_DISCONNECT_BUFFER
+        player.widow_isScoped_disconnect_buffer_size_2 = WIDOW_SCOPE_DISCONNECT_BUFFER
+        player.widow_isScoped_disconnect_buffer_size_3 = WIDOW_SCOPE_DISCONNECT_BUFFER
+        player.widow_isScoped_disconnect_buffer_size_4 = WIDOW_SCOPE_DISCONNECT_BUFFER
+        player.widow_isScoped_disconnect_buffer_size_5 = WIDOW_SCOPE_DISCONNECT_BUFFER
+        player.widow_is_PoisonMine_active_disconnect_buffer_size_1 = WIDOW_BOMB_DISCONNECT_BUFFER
+        player.widow_is_PoisonMine_active_disconnect_buffer_size_2 = WIDOW_BOMB_DISCONNECT_BUFFER
+        player.widow_is_PoisonMine_active_disconnect_buffer_size_3 = WIDOW_BOMB_DISCONNECT_BUFFER
+        player.widow_is_PoisonMine_active_disconnect_buffer_size_4 = WIDOW_BOMB_DISCONNECT_BUFFER
+        player.widow_is_PoisonMine_active_disconnect_buffer_size_5 = WIDOW_BOMB_DISCONNECT_BUFFER
+        player.widow_ult_disconnect_buffer_size = WIDOW_ULTIMATE_DISCONNECT_BUFFER
+        #----------------Cyberkittys Addtions
     last_refresh = 0
     device_count = 0
+    #----------------Cyberkittys Addtions
+    await_widow_ult = True
+    await_poison_bomb = True
+    #----------------Cyberkittys Addtions
 
     while True:
         # Gives main time to respond to pings from Intiface
@@ -477,6 +514,27 @@ async def run_overstim():
                         if ZEN_VIBE_FOR_DISCORD_ORB:
                             vibe_manager.toggle_vibe_to_condition("zen discord orb", ZEN_DISCORD_ORB_VIBE_INTENSITY, player.zen_discord_orb)
 
+                        #----------------Cyberkittys Addtions
+                        #-----------WIDOWMAKER-----------#
+                        if VIBE_FOR_WIDOW_SCOPED:
+                            if await_widow_ult == True:
+                                vibe_manager.toggle_vibe_to_condition("Widow is Zoomed", WIDOW_SCOPED_INTENSITY, player.widow_is_Scoped_1 or player.widow_is_Scoped_5 or player.widow_is_Scoped_2 or player.widow_is_Scoped_3 or player.widow_is_Scoped_4)
+                            
+                        if VIBE_FOR_WIDOW_ULTIMATE:
+                            if player.widow_is_Ulting and await_widow_ult == True:
+                                vibe_manager.add_timed_vibe(WIDOW_ULTIMATE_INTENSITY, "Widow Ultimate", 15.0)
+                                await_widow_ult = False
+                            elif player.widow_is_Ulting == False:
+                                await_widow_ult = True
+                                  
+                        if VIBE_FOR_WIDOW_BOMB: 
+                            if await_poison_bomb == True and player.widow_is_PoisonMine_active_1:
+                                vibe_manager.add_timed_vibe(WIDOW_BOMB_INTENSITY, "Widow Bomb Triggered!", 5.0)
+                                await_poison_bomb = False  
+                            elif player.widow_is_PoisonMine_active_1 == False:
+                                await_poison_bomb = True 
+                        #----------------Cyberkittys Addtions
+
                     if player.hero_auto_detect and player.detected_hero != player.hero:
                         print(f"Hero switch detected: {player.detected_hero}")
                         window["-HERO_SELECTOR-"].update(player.detected_hero)
@@ -503,7 +561,7 @@ async def main():
 
     # Define constants
     OUTPUT_WINDOW_ENABLED = True
-    HEROES = ["Other", "Baptiste", "Brigitte", "Kiriko", "Lucio", "Mercy", "Zenyatta"]
+    HEROES = ["Other", "Baptiste", "Brigitte", "Kiriko", "Lucio", "Mercy", "Zenyatta", "Widowmaker"]
     # HEROES = [
     #     "D.Va", "Doomfist", "Junker Queen", "Orisa", "Rammatra", "Reinhardt", "Roadhog", "Sigma", "Winston", "Wrecking Ball", "Zarya",
     #     "Ashe", "Bastion", "Cassidy", "Echo", "Genji", "Hanzo", "Junkrat", "Mei", "Pharah", "Reaper", "Sojourn", "Soldier: 76", "Sombra", "Symmetra", "Torbjorn", "Tracer", "Widowmaker",
@@ -525,8 +583,8 @@ async def main():
     layout = [
         [
             sg.Text("Playing hero:"),
-            sg.Combo(HEROES, readonly=True, disabled=True, enable_events=True, key="-HERO_SELECTOR-"),
-            sg.Checkbox("Auto-detect", default=True, enable_events=True, key="-HERO_AUTO_DETECT-"),
+            sg.Combo(HEROES, readonly=True, disabled=False, enable_events=True, key="-HERO_SELECTOR-"),
+            sg.Checkbox("Auto-detect", default=False, enable_events=True, key="-HERO_AUTO_DETECT-"),
         ],
         [
             sg.Text("Devices connected:"),
@@ -550,8 +608,15 @@ async def main():
         layout.insert(0, [sg.Multiline(size=(60, 15), disabled=True, reroute_stdout=True, autoscroll=True)])
     window = sg.Window("OverStim", layout, finalize=True)
     window["-HERO_SELECTOR-"].update("Other")
-    print("Ensure you read READ_BEFORE_USING.txt before using this program.\n-")
-
+    print("Ensure you read READ_BEFORE_USING.txt before using this program.")
+    print("Looking for an update? Check here: https://github.com/Cyber-Kitty/OverStim/Releases")
+    print("Hey there! Welcome to Cyber Kitty's version of OverStim! \n-")
+    print("Please be sure to show your support to the original developer cryo-es.")
+    print("Forked From: https://github.com/cryo-es/OverStim \n-")
+    
+    print("Have Fun!.\n-")
+    print("Feel free to join Discord: https://discord.gg/AVpcVhQQhu \n-")
+    
     if not config_fault[0]:
         emergency_stop_listener.start()
         # Connect to Intiface
@@ -646,6 +711,6 @@ if not config_fault[0]:
     hotkey = keyboard.HotKey(EMERGENCY_STOP_KEY_COMBO, emergency_stop)
     emergency_stop_listener = keyboard.Listener(on_press=for_canonical(hotkey.press), on_release=for_canonical(hotkey.release))
 
-sg.theme("DarkAmber")
+sg.theme("DarkPurple6") # Don't Push This by accident, its just a theme I prefer - Rosetta
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 asyncio.run(main(), debug=False)
