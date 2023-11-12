@@ -8,6 +8,7 @@ Requires [Intiface Central 2.3.0](https://intiface.com/central/](https://github.
 Default Settings (all triggers can be disabled or have their intensities/durations changed in the config):
 - **Elimination:** +30% intensity for 6 seconds
 - **Assist:** +15% intensity for 3 seconds
+- **Saved someone:** +50% intensity for 4 seconds
 - **Mercy:**
   - **Resurrect:** +100% intensity for 4 seconds
   - **Heal beam:** +10% intensity while active
@@ -23,7 +24,6 @@ Default Settings (all triggers can be disabled or have their intensities/duratio
   - **Vibrate when Widowmakers poison bomb is TRIGGERED:** +22% intensity while bomb damages opponent
 
 Optional Settings (all disabled by default):
-- **Saved someone:** +50% intensity for 4 seconds
 - **Being beamed by Mercy:** +30% intensity while active
 - **Being orbed by Zenyatta:** +30% intensity while active
 - **Hacked by Sombra:** By default, the toy is disabled when you get hacked. (You can change it to do nothing or randomly vibrate)
