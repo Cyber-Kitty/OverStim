@@ -3,7 +3,7 @@
 
 Controls your Lovense toy or connected vibrator based on what's happening in Overwatch 2, using computer vision. Won't trigger anti-cheat, because all it's doing is recording the screen like Discord screenshare and OBS does.
 
-Requires [Intiface Central 2.3.0](https://intiface.com/central/](https://github.com/intiface/intiface-central/releases/tag/v2.3.0)  if you want to use it with a toy.
+**Requires:** [Intiface Central 2.3.0](https://intiface.com/central/](https://github.com/intiface/intiface-central/releases/tag/v2.3.0)  if you want to use it with a toy.
 **Note:** _You must use version 2.3.0 as linked above. Newer or older versions may not work with my current build of OverStim_
 
 Default Settings (all triggers can be disabled or have their intensities/durations changed in the config):
