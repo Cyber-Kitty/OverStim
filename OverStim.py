@@ -711,6 +711,6 @@ if not config_fault[0]:
     hotkey = keyboard.HotKey(EMERGENCY_STOP_KEY_COMBO, emergency_stop)
     emergency_stop_listener = keyboard.Listener(on_press=for_canonical(hotkey.press), on_release=for_canonical(hotkey.release))
 
-sg.theme("DarkPurple6") # Don't Push This by accident, its just a theme I prefer - Rosetta
+sg.theme("DarkPurple6")
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 asyncio.run(main(), debug=False)
