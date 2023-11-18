@@ -54,7 +54,7 @@ class OverwatchStateTracker:
         self.hero = "Other"
         self.detected_hero = "Other"
         self.detected_hero_time = 0
-        self.hero_auto_detect = True
+        #self.hero_auto_detect = True
         self.in_killcam = False
         self.death_spectating = False
         self.is_dead = False
@@ -206,8 +206,8 @@ class OverwatchStateTracker:
 
             # Detect hero swaps for 0.1 second every 3 seconds
             current_second = self.current_time - int(self.current_time / 10) * 10
-            if self.hero_auto_detect and int(current_second) % 3 == 0 and current_second % 1 < 0.1:
-                self.detect_hero()
+            # if self.hero_auto_detect and int(current_second) % 3 == 0 and current_second % 1 < 0.1:
+            #     self.detect_hero()
 
         # If player is dead:
         else:
@@ -245,26 +245,26 @@ class OverwatchStateTracker:
                     
                 #----------------CyberKitty's Addition
 #TODO:Make Sure To Add Widowmakers Gun Detection Here
-    def detect_hero(self):
-        hero_detected = False
-        heroes = {
-            "zen_weapon": "Zenyatta",
-            "mercy_staff": "Mercy",
-            "mercy_pistol": "Mercy",
-            "baptiste_weapon": "Baptiste",
-            "brigitte_weapon": "Brigitte",
-            "kiriko_weapon": "Kiriko",
-            "lucio_weapon": "Lucio",
-        }
-        for hero_weapon, hero_name in heroes.items():
-            if self.owcv.detect_single(hero_weapon, threshold=0.97):
-                self.detected_hero = hero_name
-                self.detected_hero_time = self.current_time
-                hero_detected = True
-                break
-        # If no supported hero has been detected within the last 8 seconds:
-        if not hero_detected and self.detected_hero != "Other" and self.current_time > self.detected_hero_time + 8:
-            self.detected_hero = "Other"
+    # def detect_hero(self):
+    #     hero_detected = False
+    #     heroes = {
+    #         "zen_weapon": "Zenyatta",
+    #         "mercy_staff": "Mercy",
+    #         "mercy_pistol": "Mercy",
+    #         "baptiste_weapon": "Baptiste",
+    #         "brigitte_weapon": "Brigitte",
+    #         "kiriko_weapon": "Kiriko",
+    #         "lucio_weapon": "Lucio",
+    #     }
+    #     for hero_weapon, hero_name in heroes.items():
+    #         if self.owcv.detect_single(hero_weapon, threshold=0.97):
+    #             self.detected_hero = hero_name
+    #             self.detected_hero_time = self.current_time
+    #             hero_detected = True
+    #             break
+    #     # If no supported hero has been detected within the last 8 seconds:
+    #     if not hero_detected and self.detected_hero != "Other" and self.current_time > self.detected_hero_time + 8:
+    #         self.detected_hero = "Other"
 
     def switch_hero(self, hero_name):
         if self.hero == "Mercy":
