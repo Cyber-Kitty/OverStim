@@ -408,10 +408,10 @@ async def run_overstim():
             player.switch_hero(hero_selected)
             print(f"Hero switched to {hero_selected}.")
 
-        elif event == "-HERO_AUTO_DETECT-":
-            checkbox_state = values["-HERO_AUTO_DETECT-"]
-            player.hero_auto_detect = checkbox_state
-            window["-HERO_SELECTOR-"].update(disabled=checkbox_state)
+        #elif event == "-HERO_AUTO_DETECT-":
+        #    checkbox_state = values["-HERO_AUTO_DETECT-"]
+        #    player.hero_auto_detect = checkbox_state
+         #   window["-HERO_SELECTOR-"].update(disabled=checkbox_state)
 
         elif event == "Start":
             window["Stop"].update(disabled=False)
@@ -456,10 +456,10 @@ async def run_overstim():
                     hero_selected = values["-HERO_SELECTOR-"]
                     player.switch_hero(hero_selected)
                     print(f"Hero switched to {hero_selected}.")
-                elif event == "-HERO_AUTO_DETECT-":
-                    checkbox_state = values["-HERO_AUTO_DETECT-"]
-                    player.hero_auto_detect = checkbox_state
-                    window["-HERO_SELECTOR-"].update(disabled=checkbox_state)
+                #elif event == "-HERO_AUTO_DETECT-":
+                #    checkbox_state = values["-HERO_AUTO_DETECT-"]
+                #    player.hero_auto_detect = checkbox_state
+                #    window["-HERO_SELECTOR-"].update(disabled=checkbox_state)
 
                 if (not player.is_dead) or (player.is_dead and current_time >= last_refresh + (1 / float(DEAD_REFRESH_RATE))):
                     last_refresh = current_time
@@ -535,10 +535,10 @@ async def run_overstim():
                                 await_poison_bomb = True 
                         #----------------Cyberkittys Addtions
 
-                    if player.hero_auto_detect and player.detected_hero != player.hero:
-                        print(f"Hero switch detected: {player.detected_hero}")
-                        window["-HERO_SELECTOR-"].update(player.detected_hero)
-                        player.switch_hero(player.detected_hero)
+                    #if player.hero_auto_detect and player.detected_hero != player.hero:
+                    #    print(f"Hero switch detected: {player.detected_hero}")
+                    #    window["-HERO_SELECTOR-"].update(player.detected_hero)
+                    #    player.switch_hero(player.detected_hero)
 
             if event == sg.WIN_CLOSED or event == "Quit":
                 print("Window closed.")
@@ -584,7 +584,7 @@ async def main():
         [
             sg.Text("Playing hero:"),
             sg.Combo(HEROES, readonly=True, disabled=False, enable_events=True, key="-HERO_SELECTOR-"),
-            sg.Checkbox("Auto-detect", default=False, enable_events=True, key="-HERO_AUTO_DETECT-"),
+            #sg.Checkbox("Auto-detect", default=True, enable_events=True, key="-HERO_AUTO_DETECT-"),
         ],
         [
             sg.Text("Devices connected:"),
