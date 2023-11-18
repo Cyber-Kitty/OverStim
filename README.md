@@ -1,5 +1,5 @@
 # OverStim
-[Click here for download instructions](https://github.com/Cyber-Kitty/OverStim/releases)
+[Click here for download instructions](https://github.com/Cyber-Kitty/OverStim/releases/tag/v1.0.1)
 
 Controls your Lovense toy or connected vibrator based on what's happening in Overwatch 2, using computer vision. Won't trigger anti-cheat, because all it's doing is recording the screen like Discord screenshare and OBS does.
 
